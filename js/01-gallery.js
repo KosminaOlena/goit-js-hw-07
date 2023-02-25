@@ -21,20 +21,19 @@ function onGalleryModal(event) {
     if (event.target.nodeName !== 'IMG') {
         return;
     }
-
-    event.preventDefault();
+    event.preventDefault();  
     
     const instance = basicLightbox.create(`
     <img src="${event.target.dataset.source}">
-`)
+`,{
+		onShow: (instance) => window.addEventListener('keydown', onKeyEscPress),
+		onClose: (instance) => window.removeEventListener('keydown', onKeyEscPress)
+	})
     instance.show();
-    window.addEventListener('keydown', onKeyEscPress);
 
-    function onKeyEscPress(event) {
+       function onKeyEscPress(event) {
     if (event.code === 'Escape') {
             instance.close();
-        console.log('lisen');
-        
         }
     }
 };
